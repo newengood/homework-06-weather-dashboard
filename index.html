@@ -5,9 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<!-- link fonts -->
+  <!-- link moment -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  <!-- link fonts -->
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
-<!-- link external css -->
+  <!-- link external css -->
   <link rel="stylesheet" href="./docs/css/style.css" />
   <title>Weather Dashboard</title>
 </head>
@@ -16,11 +18,8 @@
   <header class="hero">
     <h1 class="app-title">Weather Dashboard</h1>
   </header>
-
-
   <main class="flex-row justify-space-between">
     <div class="col-12 col-md-4">
-
       <div class="card">
         <h3 class="card-header text-uppercase">Search for a city</h3>
         <form id="user-form" class="card-body">
@@ -37,10 +36,17 @@
         </div>
       </div>
     </div>
-
-    <div class="col-12 col-md-8">
-      <h2 class="subtitle">City</h2>
-      <div id="weather-container" class="list-group"></div>
+    <div class ="col-md-8">
+      <div class="col-12 col-md-8">
+        <h2 class="subtitle">City: <span id="weather-search-term"></span></h2>
+        <div id="temp-container" class="list-group"></div>
+        <div id="wind-container" class="list-group"></div>
+        <div id="humidity-container" class="list-group"></div>
+        <div id="uv-container" class="list-group"></div>
+      </div>
+      <div class = "col-12 col-md-8">
+        <h2 class ="subtitle">5 Day Forecast</h2>  
+      </div>
     </div>
   
 <!-- link external javascript -->
