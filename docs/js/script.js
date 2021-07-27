@@ -1,18 +1,25 @@
+// Declare Variables
+
+//api key
 var apiKey = "44d934bc3830ac3f23662672055e4269";
+
+// Search function variables
 var userFormEl = document.querySelector("#user-form");
 var historyEl = document.querySelector("#searchHistory");
 var cityInputEl = document.querySelector("#city");
 var weatherSearchTerm = document.querySelector("#weather-search-term");
 var searchHistory = JSON.parse(localStorage.getItem("search")) || [];
 
+// current forecast variables
 var tempContainerEl = document.querySelector("#temp-container");
 var windContainerEl = document.querySelector("#wind-container");
 var humidityContainerEl = document.querySelector("#humidity-container");
 var uvContainerEl = document.querySelector("#uv-container");
 
+// five day forecast variables
 var forecastEl = document.querySelectorAll(".forecast")
 
-
+// Function to handle search input
 var formSubmitHandler = function (event) {
   event.preventDefault();
   var city = cityInputEl.value.trim();
@@ -24,6 +31,7 @@ var formSubmitHandler = function (event) {
   }
 };
 
+// Function to retrieve weather data from third pary weather app 
 var getWeather = function (cityName) {
   var apiURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + apiKey;
   
@@ -45,19 +53,18 @@ var getWeather = function (cityName) {
     });
 };
 
+// Function to display the five day forecast
 var displayForecast = function(weatherData, cityName) {
   var lat = weatherData.coord.lat;
   var lon = weatherData.coord.lon;
 
+  // Use a different api call that gives forecast information
   var apiURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
   fetch(apiURL)
   .then(function (response) {
     if(response.ok) {
-      // console.log(response);
       response.json().then(function(data){
-        // console.log(data);;
         for (var i = 0; i < forecastEl.length; i++) {
-          // console.log(data);
           forecastEl[i].innerHTML = "";
       
           var forecastDate = moment.unix(data.daily[i].dt).format("M/D/Y");
@@ -90,6 +97,7 @@ var displayForecast = function(weatherData, cityName) {
   });
 }
 
+// function to display the current weather of searched city
 var displayWeather = function(weatherData, cityName) {
   var currentDate = moment().format("(M/D/Y)");
 
@@ -99,8 +107,6 @@ var displayWeather = function(weatherData, cityName) {
   weatherSearchTerm.textContent = cityName + " " + currentDate;
   weatherSearchTerm.append(weatherIconEl);
 
-
-  console.log(weatherData);
   var temp = "Temp: " + ((weatherData.main.temp - 273.15) * 1.8 + 32).toFixed(2) + "℉";
   var wind = "Wind: " + weatherData.wind.speed + " MPH";
   var humidity = "Humidity :" + weatherData.main.humidity + "%";
@@ -112,9 +118,7 @@ var displayWeather = function(weatherData, cityName) {
   fetch(apiURL)
   .then(function (response) {
     if(response.ok) {
-      // console.log(response);
       response.json().then(function(data){
-        // console.log(data);
         displayUV(data);
       });
     } else {
@@ -130,8 +134,8 @@ var displayWeather = function(weatherData, cityName) {
   humidityContainerEl.textContent = humidity; 
 };
 
+// function to display UV information and color baed on value
 var displayUV = function(weatherData) {
-  // console.log(weatherData);
   var uv = "UV Index: " + weatherData.current.uvi;
 
   uvContainerEl.textContent = uv;
@@ -142,7 +146,7 @@ var displayUV = function(weatherData) {
   }
   else if (weatherData.current.uvi <= 5) {
       document.getElementById("uv-container").style.backgroundColor = "yellow";
-      document.getElementById("uv-container").style.color = "white";
+      document.getElementById("uv-container").style.color = "black";
   }
   else if (weatherData.current.uvi <= 10) {
     document.getElementById("uv-container").style.backgroundColor = "red";
@@ -154,6 +158,7 @@ var displayUV = function(weatherData) {
   }
 }
 
+// Fcuntion to render search history and search if clicked
 function renderSearchHistory(event) {
   historyEl.innerHTML = "";
   for (var i = 0; i < searchHistory.length; i++) {
@@ -173,5 +178,6 @@ function renderSearchHistory(event) {
   }
 }
 
+//display search history from local storage and handle search cick
 renderSearchHistory();
 userFormEl.addEventListener("submit", formSubmitHandler);

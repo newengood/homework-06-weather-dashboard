@@ -14,6 +14,7 @@
   <title>Weather Dashboard</title>
 </head>
 
+<!-- Search Box -->
 <body class="flex-column min-100-vh">
   <header class="hero">
     <h1 class="app-title">Weather Dashboard</h1>
@@ -28,6 +29,7 @@
         </form>
       </div>
 
+      <!-- Search History -->
       <div class="card">
         <h3 class="card-header text-uppercase">Search History</h3>
         <div class="card-body">
@@ -35,14 +37,18 @@
         </div>
       </div>
     </div>
+
+    <!-- Current Forecast -->
     <div class ="col-md-8">
       <div class="col-12 col-md-8 card">
-        <h2 class="subtitle card-header text-uppercase">City: <span id="weather-search-term"></span><span id = "icon-container"></span></h2>
+        <h2 class="subtitle card-header text-uppercase">City: <span id="weather-search-term"></span></h2>
         <div id="temp-container" class="list-group"></div>
         <div id="wind-container" class="list-group"></div>
         <div id="humidity-container" class="list-group"></div>
         <div id="uv-container" class="list-group"><span id="uv-color"></span></div>
       </div>
+
+      <!-- Five Day Forecast -->
       <div class = "col-12 col-md-8 card">
         <h2 class ="subtitle card-header text-uppercase">5 Day Forecast</h2>
         <div class = "flex-row">
