@@ -135,7 +135,7 @@ var displayUV = function(weatherData) {
   }
   else if (weatherData.current.uvi <= 5) {
       document.getElementById("uv-container").style.backgroundColor = "yellow";
-      document.getElementById("uv-container").style.color = "white";
+      document.getElementById("uv-container").style.color = "black";
   }
   else if (weatherData.current.uvi <= 10) {
     document.getElementById("uv-container").style.backgroundColor = "red";
@@ -147,7 +147,7 @@ var displayUV = function(weatherData) {
   }
 }
 
-function renderSearchHistory() {
+function renderSearchHistory(event) {
   historyEl.innerHTML = "";
   for (var i = 0; i < searchHistory.length; i++) {
 
@@ -160,8 +160,8 @@ function renderSearchHistory() {
 
     historyItem.addEventListener("click", function (event) {
       event.preventDefault();
-      
-      getWeather(historyItem.value);
+
+      getWeather(event.target.value);
     });
   }
 }
