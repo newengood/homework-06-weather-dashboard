@@ -1,7 +1,7 @@
 var apiKey = "44d934bc3830ac3f23662672055e4269";
-var userFormEl = document.querySelector('#user-form');
+var userFormEl = document.querySelector("#user-form");
 var historyEl = document.querySelector("#searchHistory");
-var cityInputEl = document.querySelector('#city');
+var cityInputEl = document.querySelector("#city");
 var weatherSearchTerm = document.querySelector("#weather-search-term");
 var searchHistory = JSON.parse(localStorage.getItem("search")) || [];
 
@@ -32,7 +32,7 @@ var getWeather = function (cityName) {
       if(response.ok) {
         // console.log(response);
       response.json().then(function(data){
-        // console.log(data);
+        console.log(data);
         displayWeather(data, cityName);
         displayForecast(data, cityName);
       });
@@ -92,8 +92,15 @@ var displayForecast = function(weatherData, cityName) {
 
 var displayWeather = function(weatherData, cityName) {
   var currentDate = moment().format("(M/D/Y)");
+
+  var weatherIconEl = document.createElement("img");
+  weatherIconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + weatherData.weather[0].icon + "@2x.png");
+
   weatherSearchTerm.textContent = cityName + " " + currentDate;
-  // console.log(weatherData);
+  weatherSearchTerm.append(weatherIconEl);
+
+
+  console.log(weatherData);
   var temp = "Temp: " + ((weatherData.main.temp - 273.15) * 1.8 + 32).toFixed(2) + "℉";
   var wind = "Wind: " + weatherData.wind.speed + " MPH";
   var humidity = "Humidity :" + weatherData.main.humidity + "%";
@@ -120,7 +127,7 @@ var displayWeather = function(weatherData, cityName) {
 
   tempContainerEl.textContent = temp;
   windContainerEl.textContent = wind;
-  humidityContainerEl.textContent = humidity;  
+  humidityContainerEl.textContent = humidity; 
 };
 
 var displayUV = function(weatherData) {
@@ -135,7 +142,7 @@ var displayUV = function(weatherData) {
   }
   else if (weatherData.current.uvi <= 5) {
       document.getElementById("uv-container").style.backgroundColor = "yellow";
-      document.getElementById("uv-container").style.color = "black";
+      document.getElementById("uv-container").style.color = "white";
   }
   else if (weatherData.current.uvi <= 10) {
     document.getElementById("uv-container").style.backgroundColor = "red";
