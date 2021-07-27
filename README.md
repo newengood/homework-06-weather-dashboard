@@ -30,6 +30,7 @@ THEN I am again presented with current and future conditions for that city - [X]
 
 ## Link to deployed application
 
+https://newengood.github.io/homework-06-weather-dashboard/
 
 - - -
 © Newengood
