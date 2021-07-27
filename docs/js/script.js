@@ -10,6 +10,7 @@ var windContainerEl = document.querySelector("#wind-container");
 var humidityContainerEl = document.querySelector("#humidity-container");
 var uvContainerEl = document.querySelector("#uv-container");
 
+var forecastEl = document.querySelectorAll(".forecast")
 
 
 var formSubmitHandler = function (event) {
@@ -33,6 +34,7 @@ var getWeather = function (cityName) {
       response.json().then(function(data){
         // console.log(data);
         displayWeather(data, cityName);
+        displayForecast(data, cityName);
       });
       } else {
         alert("Error: " + response.statusText);
@@ -43,10 +45,42 @@ var getWeather = function (cityName) {
     });
 };
 
+var displayForecast = function(weatherData, cityName) {
+  var lat = weatherData.coord.lat;
+  var lon = weatherData.coord.lon;
+
+  var apiURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
+  fetch(apiURL)
+  .then(function (response) {
+    if(response.ok) {
+      // console.log(response);
+      response.json().then(function(data){
+        console.log(data);;
+        for (var i = 0; i < forecastEl.length; i++) {
+          console.log(data);
+          forecastEl.innerHTML = "";
+      
+          var forecastDate = moment.unix(data.daily[i].dt).format("M/D/Y");
+
+          forecastDateEl = document.createElement("p");
+
+          forecastEl[i].append(forecastDate);
+
+        }
+      });
+    } else {
+      alert("Error: " + response.statusText);
+    }
+  })
+  .catch(function(error) {
+    alert("Unable to connect to open weather");
+  });
+}
+
 var displayWeather = function(weatherData, cityName) {
   var currentDate = moment().format("(M/D/Y)");
   weatherSearchTerm.textContent = cityName + " " + currentDate;
-  console.log(weatherData);
+  // console.log(weatherData);
   var temp = "Temp: " + ((weatherData.main.temp - 273.15) * 1.8 + 32).toFixed(2) + "℉";
   var wind = "Wind: " + weatherData.wind.speed + " MPH";
   var humidity = "Humidity :" + weatherData.main.humidity + "%";
@@ -77,7 +111,7 @@ var displayWeather = function(weatherData, cityName) {
 };
 
 var displayUV = function(weatherData) {
-  console.log(weatherData);
+  // console.log(weatherData);
   var uv = "UV Index: " + weatherData.current.uvi;
 
   uvContainerEl.textContent = uv;
