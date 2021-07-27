@@ -20,7 +20,7 @@ var formSubmitHandler = function (event) {
     getWeather(city);
     searchHistory.push(city);
     localStorage.setItem("search",JSON.stringify(searchHistory));
-  renderSearchHistory();
+    renderSearchHistory();
   }
 };
 
@@ -124,7 +124,7 @@ var displayWeather = function(weatherData, cityName) {
 };
 
 var displayUV = function(weatherData) {
-  console.log(weatherData);
+  // console.log(weatherData);
   var uv = "UV Index: " + weatherData.current.uvi;
 
   uvContainerEl.textContent = uv;
@@ -156,15 +156,15 @@ function renderSearchHistory() {
     historyItem.setAttribute("readonly", true)
     historyItem.setAttribute("class", "form-input")
     historyItem.setAttribute("value", searchHistory[i]);
+    historyEl.append(historyItem);
+
     historyItem.addEventListener("click", function (event) {
       event.preventDefault();
-
+      
       getWeather(historyItem.value);
     });
-
-    historyEl.append(historyItem);
   }
 }
 
 renderSearchHistory();
-userFormEl.addEventListener('submit', formSubmitHandler);
+userFormEl.addEventListener("submit", formSubmitHandler);
