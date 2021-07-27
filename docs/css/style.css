@@ -154,6 +154,11 @@
     border-radius: var(--border-radius);
   }
   
+  .weather-card {
+    border: 3px solid var(--dark);
+    border-radius: var(--border-radius);
+  }
+
   .card-header {
     color: var(--primary);
     background-color: var(--dark);

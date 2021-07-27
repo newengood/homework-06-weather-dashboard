@@ -55,16 +55,29 @@ var displayForecast = function(weatherData, cityName) {
     if(response.ok) {
       // console.log(response);
       response.json().then(function(data){
-        console.log(data);;
+        // console.log(data);;
         for (var i = 0; i < forecastEl.length; i++) {
-          console.log(data);
-          forecastEl.innerHTML = "";
+          // console.log(data);
+          forecastEl[i].innerHTML = "";
       
           var forecastDate = moment.unix(data.daily[i].dt).format("M/D/Y");
-
+          
+          var humidityEl = document.createElement("p");
+          var windEl = document.createElement("p");
+          var temperatureEl = document.createElement("p");
+          var weatherIconEl = document.createElement("img");
           forecastDateEl = document.createElement("p");
+          
+          weatherIconEl.setAttribute("src", "http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + "@2x.png");
+          temperatureEl.innerHTML = "Temp :" + ((data.daily[i].temp.day - 273.15) * 1.8 + 32).toFixed(2) + "℉";
+          windEl.innerHTML = "Wind: " + data.daily[i].wind_speed + "MPH";
+          humidityEl.innerHTML = "Humidity :" + data.daily[i].humidity + "%";
 
           forecastEl[i].append(forecastDate);
+          forecastEl[i].append(weatherIconEl);
+          forecastEl[i].append(temperatureEl);
+          forecastEl[i].append(windEl);
+          forecastEl[i].append(humidityEl);
 
         }
       });
@@ -111,20 +124,44 @@ var displayWeather = function(weatherData, cityName) {
 };
 
 var displayUV = function(weatherData) {
-  // console.log(weatherData);
+  console.log(weatherData);
   var uv = "UV Index: " + weatherData.current.uvi;
 
   uvContainerEl.textContent = uv;
+
+  if (weatherData.current.uvi <= 2) {
+      document.getElementById("uv-container").style.backgroundColor = "green";
+      document.getElementById("uv-container").style.color = "white";
+  }
+  else if (weatherData.current.uvi <= 5) {
+      document.getElementById("uv-container").style.backgroundColor = "yellow";
+      document.getElementById("uv-container").style.color = "white";
+  }
+  else if (weatherData.current.uvi <= 10) {
+    document.getElementById("uv-container").style.backgroundColor = "red";
+    document.getElementById("uv-container").style.color = "white";
+  }
+  else {
+    document.getElementById("uv-container").style.backgroundColor = "darkred";
+    document.getElementById("uv-container").style.color = "white";
+  }
 }
 
 function renderSearchHistory() {
   historyEl.innerHTML = "";
   for (var i = 0; i < searchHistory.length; i++) {
+
     var historyItem = document.createElement("input");
     historyItem.setAttribute("type","text");
     historyItem.setAttribute("readonly", true)
     historyItem.setAttribute("class", "form-input")
     historyItem.setAttribute("value", searchHistory[i]);
+    historyItem.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      getWeather(historyItem.value);
+    });
+
     historyEl.append(historyItem);
   }
 }
