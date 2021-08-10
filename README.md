@@ -36,3 +36,5 @@ https://newengood.github.io/homework-06-weather-dashboard/
 MIT License
 
 Copyright (c) 2021 Newengood
+
+taylor@newengood.com
