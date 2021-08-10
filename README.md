@@ -33,4 +33,6 @@ THEN I am again presented with current and future conditions for that city - [X]
 https://newengood.github.io/homework-06-weather-dashboard/
 
 - - -
-© Newengood
+MIT License
+
+Copyright (c) 2021 Newengood
