@@ -1,6 +1,5 @@
 # Taylor anderson
-# Homework #6
-# 06 Server-Side APIs: Weather Dashboard
+# Homework #6 Server-Side APIs: Weather Dashboard
 # Technologies used: HTML, CSS, JS, OpenWeather API
 
 ## Task
